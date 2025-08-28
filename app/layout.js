@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       <head>
         <link
           rel="icon"
-          href="/images/windmill-pub.png"
+          href="/images/windmill-hitchin.png"
           type="image/png"
           sizes="32x32"
         />

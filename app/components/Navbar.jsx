@@ -30,7 +30,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link href="/" className="cursor-pointer">
           <Image
-            src="/images/windmill-pub.png"
+            src="/images/windmill.png"
             alt="Windmill Pub Logo"
             width={110}
             height={60}

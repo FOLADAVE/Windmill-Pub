@@ -6,10 +6,14 @@ const menuItems = [
   { name: "Burger", img: "/images/burgerr.png" },
   { name: "Chef's Special", img: "/images/chefs-special.png" },
   { name: "Munchies", img: "/images/munchiez.jpg" },
+  { name: "African Meals", img: "/images/j-turkey.jpg" },
+  { name: "African Desserts", img: "/images/pepper-soup.jpg" },
+  { name: "African drinks", img: "/images/b-weiser.jpg" },
   { name: "Sea Delights", img: "/images/salmon.png" },
   { name: "Sizzlers", img: "/images/chicken.png" },
   { name: "Sweet Treats", img: "/images/sweet.png" },
   { name: "Pizza", img: "/images/pizza.png" },
+
 ];
 
 export default function MenuSection({ setSelectedCategory, selectedCategory }) {
@@ -22,12 +26,12 @@ export default function MenuSection({ setSelectedCategory, selectedCategory }) {
         ingredients.
       </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-6 justify-items-center">
+  <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-6 justify-items-center justify-center">
         {menuItems.map((item, index) => (
           <div
             key={index}
             onClick={() => setSelectedCategory(item.name)}
-            className={`flex flex-col items-center cursor-pointer ${
+            className={`flex flex-col items-center justify-center cursor-pointer ${
               selectedCategory === item.name ? "scale-105 text-green-600" : ""
             }`}
           >

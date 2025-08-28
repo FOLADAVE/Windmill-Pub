@@ -12,7 +12,7 @@ const Contact = () => {
         <div className="md:col-span-2">
           <Image
             className="w-28 md:w-32"
-            src="/windmill-pub.png"
+            src="/images/windmill.png"
             alt="logo"
             width={140}
             height={140}
@@ -48,7 +48,7 @@ const Contact = () => {
           <h2 className="font-medium text-green-600 mb-5">Get in touch</h2>
           <div className="text-sm space-y-2">
             <p>+1-234-567-890</p>
-            <p>contact@windmillpub.dev</p>
+            <p>Events@thewindmillpub.co.uk</p>
             <p>50 High St, London, England W3 6</p>
           </div>
         </div>
@@ -56,7 +56,7 @@ const Contact = () => {
 
       {/* Copyright */}
       <p className="py-4 text-center text-xs md:text-sm">
-        Copyright {currentYear} © The Windmill Pub Restaurant. All Rights Reserved.
+        Copyright {currentYear} © The Windmill Pub Hitchin. All Rights Reserved.
       </p>
     </section>
   );
