@@ -35,10 +35,10 @@ export default function About() {
         <div>
           <h3 className="text-green-600 font-semibold mb-2">The Story Behind the Flavor</h3>
           <h2 className="text-4xl font-bold text-gray-900 leading-tight mb-4">
-            The Windmill Pub Restaurant
+            The Windmill Pub Hitchin
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            The Windmill Pub Restaurant in Actonne, London, offers a quintessential pub dining
+            The Windmill Pub Hitchin in Actonne, London, offers a quintessential pub dining
              experience with a diverse menu that spans traditional British and Irish dishes. 
              Popular among patrons are the Boiled Bacon and Cabbage, Shepherd's Pie, Roast Leg of Lamb and Mint Sauce, and Bangers and Mash. 
           </p>

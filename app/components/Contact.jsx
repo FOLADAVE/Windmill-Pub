@@ -18,9 +18,7 @@ const Contact = () => {
             height={140}
           />
           <p className="mt-6 text-sm leading-relaxed">
-            Feel free to get in touch with us. We are always open to discussing
-            new projects, creative ideas, or opportunities to be part of your
-            vision.
+            We love hearing from our guests! Whether you have a question about our menu, want to book a table, or just want to share your experience at The Windmill Pub Hitchin, our team is here to help. Reach out and let us make your next visit even more memorable.
           </p>
         </div>
 
@@ -48,7 +46,7 @@ const Contact = () => {
           <h2 className="font-medium text-green-600 mb-5">Get in touch</h2>
           <div className="text-sm space-y-2">
             <p>+1-234-567-890</p>
-            <p>Events@thewindmillpub.co.uk</p>
+            <p>events@thewindmillpub.co.uk</p>
             <p>50 High St, London, England W3 6</p>
           </div>
         </div>

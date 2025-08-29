@@ -14,7 +14,7 @@ const HeaderSlider = () => {
     },
     {
       id: 2,
-      title: "Enjoy Comfort Food Anytime – Hot & Tasty, Just for You",
+      title: "Enjoy Comfort Food Anytime – Hot & Tasty, Just for You!",
       offer: "Your favorite meals delivered fast",
       buttonText1: "Grab a Bite",
       buttonText2: "See Dishes",
@@ -22,7 +22,7 @@ const HeaderSlider = () => {
     },
     {
       id: 3,
-      title: "From Farm to Plate – Fresh Ingredients, Healthy Choices",
+      title: "From Farm to Plate – Fresh Ingredients, Healthy Choices!",
       offer: "Wholesome meals prepared daily",
       buttonText1: "Order Fresh",
       buttonText2: "Explore Menu",
@@ -30,7 +30,7 @@ const HeaderSlider = () => {
     },
     {
       id: 4,
-      title: "Celebrate Every Moment with Delicious Treats",
+      title: "Celebrate Every Moment with Delicious Treats!",
       offer: "Perfect meals for family and friends",
       buttonText1: "Start Ordering",
       buttonText2: "Browse Menu",
@@ -38,7 +38,7 @@ const HeaderSlider = () => {
     },
     {
       id: 5,
-      title: "Good Food, Great Mood – Taste Happiness Today",
+      title: "Good Food, Great Mood – Taste Happiness Today!",
       offer: "Meals that bring people together",
       buttonText1: "Order Now",
       buttonText2: "Discover More",
