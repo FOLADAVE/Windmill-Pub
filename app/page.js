@@ -6,6 +6,7 @@ import ExploreMenu from "./components/Exploremenu";
 import TopDishes from "./components/Food";
 import HeaderSlider from "./components/Headerslider";
 import Navbar from "./components/Navbar";
+import EventsSection from "./components/EventsSection";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -19,6 +20,7 @@ export default function Home() {
         setSelectedCategory={setSelectedCategory}
       />
       <TopDishes selectedCategory={selectedCategory} />
+      <EventsSection />
       <About />
       <Contact />
     </main>
