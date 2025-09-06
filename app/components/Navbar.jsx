@@ -107,18 +107,7 @@ const Navbar = () => {
                   <p className="px-4 py-3 text-sm font-semibold text-gray-700 border-b">
                     Hi, {user.name?.split(" ")[0] || "User"}
                   </p>
-                  <Link
-                    href="/account"
-                    className="block px-4 py-2.5 text-sm hover:bg-green-50 hover:text-green-700 transition"
-                  >
-                    My Account
-                  </Link>
-                  <Link
-                    href="/orders"
-                    className="block px-4 py-2.5 text-sm hover:bg-green-50 hover:text-green-700 transition"
-                  >
-                    My Orders
-                  </Link>
+                 
                   <button
                     onClick={() => signOut()}
                     className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"
