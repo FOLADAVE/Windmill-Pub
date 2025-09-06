@@ -69,7 +69,10 @@ const Navbar = () => {
           </button>
 
           {/* Cart */}
-          <Link href="/cart" className="hover:opacity-80 transition flex items-center">
+          <Link
+            href="/cart"
+            className="hover:opacity-80 transition flex items-center"
+          >
             <Image
               src="/images/bags-shoppin.png"
               alt="Cart"
@@ -86,7 +89,7 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="w-9 h-9 rounded-full overflow-hidden border-2 border-green-700 hover:opacity-80 transition"
+                className="w-9 h-9 rounded-full overflow-hidden border-2 border-green-700 hover:ring-2 hover:ring-green-300 transition"
               >
                 <Image
                   src={user.image || "/images/default-avatar.png"}
@@ -100,20 +103,25 @@ const Navbar = () => {
 
               {/* Dropdown */}
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg border z-50">
-                  <p className="px-4 py-2 text-sm font-medium text-gray-700">
+                <div className="absolute right-0 mt-3 w-52 bg-white shadow-lg rounded-xl border border-gray-100 z-50 animate-fadeIn">
+                  <p className="px-4 py-3 text-sm font-semibold text-gray-700 border-b">
                     Hi, {user.name?.split(" ")[0] || "User"}
                   </p>
-                  <hr />
-                  <Link href="/account" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  <Link
+                    href="/account"
+                    className="block px-4 py-2.5 text-sm hover:bg-green-50 hover:text-green-700 transition"
+                  >
                     My Account
                   </Link>
-                  <Link href="/orders" className="block px-4 py-2 text-sm hover:bg-gray-100">
+                  <Link
+                    href="/orders"
+                    className="block px-4 py-2.5 text-sm hover:bg-green-50 hover:text-green-700 transition"
+                  >
                     My Orders
                   </Link>
                   <button
                     onClick={() => signOut()}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"
                   >
                     Logout
                   </button>
@@ -131,8 +139,21 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Login Popup */}
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+      {/* Login Popup with blur background */}
+      {showLogin && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Background blur */}
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setShowLogin(false)}
+          ></div>
+
+          {/* Popup */}
+          <div className="relative z-50">
+            <LoginPopup setShowLogin={setShowLogin} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -68,7 +68,7 @@ const Carts = () => {
             <hr className="my-2" />
             <div className="flex justify-between font-bold">
               <p>Total</p>
-            <p>£{totalAmount}</p>
+              <p>£{totalAmount}</p>
             </div>
           </div>
           <button

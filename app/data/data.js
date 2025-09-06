@@ -117,26 +117,44 @@ export const dishes = [
     img: "/images/munchiez.jpg",
     category: "Munchies",
   },
-  {
+    {
     id: 14,
-    name: "Poundo yam swallow and Afang",
+    name: "A pot of Poundo yam swallow and Afang",
     description: "Tasty native African Delicacy",
     price: 60,
-    rating: 4,
+    rating: 5,
     img: "/images/p-afang.jpg",
     category: "African Meals",
   },
   {
     id: 15,
-    name: "Poundo yam swallow and Egusi",
+    name: " A pot of Poundo yam swallow and Egusi",
     description: "Delicious traditional African dish",
     price: 60,
-    rating: 4,
+    rating:5,
     img: "/images/p-egusi.jpg",
     category: "African Meals",
   },
   {
     id: 16,
+    name: "A plate of Poundo yam swallow and Afang",
+    description: "Tasty native African Delicacy",
+    price: 15,
+    rating: 5,
+    img: "/images/p-afang.jpg",
+    category: "African Meals",
+  },
+  {
+    id: 17,
+    name: " A plate of Poundo yam swallow and Egusi",
+    description: "Delicious traditional African dish",
+    price: 15,
+    rating: 5,
+    img: "/images/p-egusi.jpg",
+    category: "African Meals",
+  },
+  {
+    id: 18,
     name: "Jollof rice/turkey/salad",
     description: "Served hot with salad",
     price: 12,
@@ -145,7 +163,7 @@ export const dishes = [
     category: "African Meals",
   },
   {
-    id: 17,
+    id: 19,
     name: "Jollof rice/chicken/salad",
     description: "Served with spicy chicken and salad",
     price: 12,
@@ -154,7 +172,7 @@ export const dishes = [
     category: "African Meals",
   },
   {
-    id: 18,
+    id: 20,
     name: "Hot Goat meat pepper soup",
     description: "Served spicy hot goat meat pepper soup",
     price: 11,
@@ -163,7 +181,7 @@ export const dishes = [
     category: "African Desserts",
   },
   {
-    id: 19,
+    id: 21,
     name: "Nkwobi",
     description: "Tasty goat meat delicacy",
     price: 11,
@@ -172,7 +190,7 @@ export const dishes = [
     category: "African Desserts",
   },
   {
-    id: 20,
+    id: 22,
     name: "Star Lager Beer",
     description: "Chilled refreshing beer",
     price: 10,
@@ -181,7 +199,7 @@ export const dishes = [
     category: "African drinks",
   },
   {
-    id: 21,
+    id: 23,
     name: "Nigerian Trophy Beer",
     description: "Chilled refreshing beer",
     price: 10,
@@ -190,7 +208,7 @@ export const dishes = [
     category: "African drinks",
   },
   {
-    id: 22,
+    id: 24,
     name: "Budweiser Beer",
     description: "Chilled refreshing beer",
     price: 10,
@@ -199,7 +217,7 @@ export const dishes = [
     category: "African drinks",
   },
   {
-    id: 23,
+    id: 25,
     name: "Stout (Guinness)",
     description: "Chilled refreshing beer",
     price: 10,
@@ -208,7 +226,7 @@ export const dishes = [
     category: "African drinks",
   },
   {
-    id: 24,
+    id: 26,
     name: "Scampi and Chips",
     description: "Served with salad, chunky chips, and tarter sauce. ",
     price: 13.95,
@@ -217,7 +235,7 @@ export const dishes = [
     category: "Sea Delights",
   },
   {
-    id: 25,
+    id: 27,
     name: "Deep Fried Calamari",
     description: "Served with lemon aioli",
     price: 10.95,
@@ -226,7 +244,7 @@ export const dishes = [
     category: "Sea Delights",
   },
   {
-    id: 26,
+    id: 28,
     name: "Pan Fried or Poached Salmon",
     description: "Served with vegetables, mash potatoes and hollandaise sauce.",
     price: 15.95,
@@ -235,7 +253,7 @@ export const dishes = [
     category: "Sea Delights",
   },
   {
-    id: 27,
+    id: 29,
     name: "Fish and Chips",
     description: "Fresh cod loin in seasoned batter, served with peas, chunky chips, and tartar sauce",
     price: 17.00,
@@ -245,7 +263,7 @@ export const dishes = [
   },
   
   {
-    id: 28,
+    id: 30,
     name: "Ham, Eggs and Chunky Chips",
     description: "Served with garden peas.",
     price: 10.95,
@@ -254,7 +272,7 @@ export const dishes = [
     category: "Sizzlers",
   },
   {
-    id: 29,
+    id: 31,
     name: "Chicken Strips",
     description: "Served with garden peas and chunky chips.",
     price: 6.50,
@@ -263,7 +281,7 @@ export const dishes = [
     category: "Sizzlers",
   },
   {
-    id: 30,
+    id: 32,
     name: "Sausage and Mash",
     description: "Served with garden peas and chunky chips.",
     price: 6.50,
@@ -272,7 +290,7 @@ export const dishes = [
     category: "Sizzlers",
   },
   {
-    id: 31,
+    id: 33,
     name: "Chicken Tenders",
     description: "Served with sweet chilli sauce",
     price: 5.50,
@@ -281,7 +299,7 @@ export const dishes = [
     category: "Sizzlers",
   },
   {
-    id: 32,
+    id: 34,
     name: "Home Made Apple Pie",
     description: "Served with ice-cream.",
     price: 5.00,
@@ -290,7 +308,7 @@ export const dishes = [
     category: "Sweet Treats",
   },
   {
-    id: 33,
+    id: 35,
     name: "New York Cheesecake",
     description: "Rich and creamy dessert with a dense, velvety texture.",
     price: 5.00,
@@ -299,7 +317,7 @@ export const dishes = [
     category: "Sweet Treats",
   },
   {
-    id: 34,
+    id: 36,
     name: "Peaches and Ice-cream",
     description: "Sweet and juicy peaches served with a scoop of creamy ice cream",
     price: 5.00,
@@ -308,7 +326,7 @@ export const dishes = [
     category: "Sweet Treats",
   },
   {
-    id: 35,
+    id: 37,
     name: "Chocolate Fudge Cake",
     description: "Rich, decadent chocolate cake smothered in a velvety fudge toping",
     price: 5.00,
@@ -317,7 +335,7 @@ export const dishes = [
     category: "Sweet Treats",
   },
   {
-    id: 36,
+    id: 38,
     name: "Margarita",
     description: "Tomato, Mozzarella and Basil.",
     price: 11.00,
@@ -326,7 +344,7 @@ export const dishes = [
     category: "Pizza",
   },
   {
-    id: 37,
+    id: 39,
     name: "Pepperoni",
     description: "Tomato, Mozzarella and Pepperoni",
     price: 11.0,
@@ -335,7 +353,7 @@ export const dishes = [
     category: "Pizza",
   },
   {
-    id: 38,
+    id: 40,
     name: "Vegetarian",
     description: "Red onion, courgettes, mix peppers and aubergines.",
     price: 11.0,
@@ -344,7 +362,7 @@ export const dishes = [
     category: "Pizza",
   },
   {
-    id: 39,
+    id: 41,
     name: "Classico",
     description: "Cherry tomato, mozzarella and proscuitto",
     price: 11.0,

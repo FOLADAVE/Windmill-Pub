@@ -45,7 +45,7 @@ const Contact = () => {
         <div>
           <h2 className="font-medium text-green-600 mb-5">Get in touch</h2>
           <div className="text-sm space-y-2">
-            <p>+1-234-567-890</p>
+            <p>+44 1462 544975 or <br/>+44 7368 974322</p>
             <p>events@thewindmillpub.co.uk</p>
             <p>50 High St, London, England W3 6</p>
           </div>

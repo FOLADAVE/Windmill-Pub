@@ -1,143 +1,88 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
+import { signIn } from "next-auth/react";
 
-const LoginPopup = ({ setShowLogin }) => {
-  const [currState, setCurrState] = useState("Login");
-  const [user, setUser] = useState(null); // store user info
-
-  // This function will handle Google login success
-  const handleGoogleSuccess = (credentialResponse) => {
-    try {
-      // Decode the JWT credential returned from Google
-      const decoded = jwtDecode(credentialResponse.credential);
-      console.log("Decoded User:", decoded);
-
-      // Save user info in state (you can also save to localStorage or backend)
-      setUser(decoded);
-
-      // Close popup
-      setShowLogin(false);
-    } catch (err) {
-      console.error("JWT Decode Error:", err);
-    }
-  };
-
-  const handleGoogleError = () => {
-    console.log("Google login failed");
-  };
+export default function LoginPopup({ setShowLogin }) {
+  // Close on Escape key
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") setShowLogin(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [setShowLogin]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <form className="bg-white w-[90%] max-w-xs p-6 rounded-lg shadow-lg flex flex-col gap-4 animate-fadeIn">
-        {/* Title */}
-        <div className="flex justify-between items-center text-black">
-          <h2 className="text-xl font-semibold">
-            {user ? `Welcome, ${user.name}` : currState}
-          </h2>
-          <button
-            type="button"
-            onClick={() => setShowLogin(false)}
-            className="hover:opacity-70"
+    <div className="fixed inset-0 z-[100] flex items-center justify-center">
+      {/* Overlay */}
+      <div
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm z-40"
+        onClick={() => setShowLogin(false)}
+      />
+
+      {/* Modal Content */}
+      <div
+        className="relative z-50 bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 text-center animate-fadeIn"
+        role="dialog"
+        aria-modal="true"
+      >
+        <button
+          onClick={() => setShowLogin(false)}
+          aria-label="Close"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 cursor-pointer"
+        >
+          ✕
+        </button>
+
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">Welcome Back</h1>
+        <p className="text-gray-600 mb-8">
+          Sign in to order your favorite meals
+        </p>
+
+        {/* Google Sign In Button */}
+        <button
+          onClick={() => signIn("google")}
+          className="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl shadow-md transition cursor-pointer"
+        >
+          {/* Google SVG Logo */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 488 512"
+            className="w-6 h-6"
           >
-            <Image src="/images/close.png" alt="Close" width={20} height={20} />
-          </button>
+            <path
+              fill="#4285F4"
+              d="M488 261.8c0-17.8-1.6-35-4.6-51.8H249v97.9h134.7c-5.8 31.2-23.2 57.6-49.2 75.3v62.6h79.2c46.4-42.7 73.3-105.5 73.3-183z"
+            />
+            <path
+              fill="#34A853"
+              d="M249 492c66.2 0 121.7-21.9 162.3-59.4l-79.2-62.6c-22 15-50.2 24-83.1 24-63.9 0-118-43.1-137.4-101.2h-81v63.8C71.4 445.2 154.5 492 249 492z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M111.6 293.8c-4.8-14.2-7.6-29.4-7.6-45s2.7-30.8 7.6-45V140h-81C18.3 176.9 0 220.8 0 268.8s18.3 91.9 50.6 128.8l61-47.8z"
+            />
+            <path
+              fill="#EA4335"
+              d="M249 97.8c35.9 0 68 12.4 93.3 36.9l69.9-69.9C370.7 24.3 315.2 0 249 0 154.5 0 71.4 46.8 29.6 118.8l81 63.8C131 141 185.1 97.8 249 97.8z"
+            />
+          </svg>
+          Continue with Google
+        </button>
+
+        <div className="mt-8">
+          <p className="text-sm text-gray-500">
+            By signing in, you agree to our{" "}
+            <a href="#" className="text-red-500 hover:underline">
+              Terms
+            </a>{" "}
+            and{" "}
+            <a href="#" className="text-red-500 hover:underline">
+              Privacy Policy
+            </a>.
+          </p>
         </div>
-
-        {/* Show user info if logged in */}
-        {user ? (
-          <div className="flex flex-col items-center gap-2 text-center">
-            <Image
-              src={user.picture}
-              alt={user.name}
-              width={60}
-              height={60}
-              className="rounded-full"
-            />
-            <p className="text-gray-700">{user.email}</p>
-          </div>
-        ) : (
-          <>
-            {/* Inputs */}
-            <div className="flex flex-col gap-3">
-              {currState === "Login" ? null : (
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  required
-                  className="border border-gray-300 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-600"
-                />
-              )}
-              <input
-                type="email"
-                placeholder="Your email"
-                required
-                className="border border-gray-300 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-600"
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                required
-                className="border border-gray-300 rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-green-600"
-              />
-            </div>
-
-            {/* Login Button */}
-            <button
-              type="submit"
-              className="bg-green-700 text-white py-2 rounded-md hover:bg-green-800 transition"
-            >
-              {currState === "Sign Up" ? "Create Account" : "Login"}
-            </button>
-
-            {/* OR Separator */}
-            <div className="flex items-center gap-2 text-gray-400 text-sm my-2">
-              <hr className="flex-1" />
-              <span>OR</span>
-              <hr className="flex-1" />
-            </div>
-
-            {/* Google Login Button */}
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-            />
-
-            {/* Checkbox */}
-            <div className="flex items-start gap-2 text-gray-600 text-xs mt-2">
-              <input type="checkbox" required className="mt-1" />
-              <p>By continuing, I agree to the terms of use & privacy policy.</p>
-            </div>
-
-            {/* Switch Login / Sign Up */}
-            {currState === "Login" ? (
-              <p className="text-sm mt-2">
-                Create a new account?{" "}
-                <span
-                  onClick={() => setCurrState("Sign Up")}
-                  className="text-green-700 font-medium cursor-pointer hover:underline"
-                >
-                  Click here
-                </span>
-              </p>
-            ) : (
-              <p className="text-sm mt-2">
-                Already have an account?{" "}
-                <span
-                  onClick={() => setCurrState("Login")}
-                  className="text-green-700 font-medium cursor-pointer hover:underline"
-                >
-                  Login here
-                </span>
-              </p>
-            )}
-          </>
-        )}
-      </form>
+      </div>
     </div>
   );
-};
-
-export default LoginPopup;
+}
