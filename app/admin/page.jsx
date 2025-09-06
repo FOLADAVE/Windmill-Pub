@@ -255,14 +255,29 @@ function AdminPanel({ onSignOut }) {
 export default function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    if (password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+  const handleLogin = async () => {
+  try {
+    const res = await fetch("/api/admin-login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password }),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
       setAuthenticated(true);
     } else {
       alert("❌ Wrong password");
     }
-  };
+  } catch (err) {
+    alert("⚠️ Server error, please try again.");
+    console.error(err);
+  }
+};
+
 
   const handleSignOut = () => {
     setAuthenticated(false);
@@ -306,6 +321,8 @@ export default function AdminPage() {
           >
             Sign In
           </button>
+
+          {error && <p className="text-red-500 text-center mt-3">{error}</p>}
 
           {/* Footer */}
           <p className="text-xs text-center text-gray-400 mt-6">
