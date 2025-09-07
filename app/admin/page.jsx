@@ -12,39 +12,41 @@ function AdminPanel({ onSignOut }) {
   const ordersPerPage = 5;
 
   // ✅ Fetch orders from Google Sheets (via Apps Script doGet)
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await fetch(
-          "https://script.google.com/macros/s/AKfycbzX02QFh-DWHpP8ZeECDqz8F3VfDSY8kXUdf1uvM7q0mfXKTOYY1mxItrj5MRbvYnJt/exec"
-        );
-        const data = await res.json();
+useEffect(() => {
+  const fetchOrders = async () => {
+    try {
+     const res = await fetch("/api/orders");
 
-        // Transform rows into your table structure
-        const mappedOrders = data.map((row, index) => ({
-          id: index + 1,
-          orderTime: row["Timestamp"] || "",
-          restaurantType: row["Restaurant type"] || "",
-          orderOption: row["Order option"] || "",
-          address: row["Address"] || "",
-          phone: row["Phone"] || "",
-          userName: row["Name"] || "",
-          userEmail: row["Email"] || "",
-          items: (row["Item"] || "").split(",").map((item) => item.trim()),
-          subtotal: parseFloat(row["Subtotal"] || 0),
-          deliveryFee: parseFloat(row["Delivery fee"] || 0),
-          total: parseFloat(row["Total"] || 0),
-        }));
+      const data = await res.json();
 
-        setOrders(mappedOrders);
-      } catch (error) {
-        console.error("❌ Error fetching orders:", error);
-      } finally {
-        setLoading(false);
+      if (data.error) {
+        throw new Error(data.error);
       }
-    };
 
-    fetchOrders();
+      const mappedOrders = data.map((row, index) => ({
+        id: index + 1,
+        orderTime: row["Timestamp"] || "",
+        restaurantType: row["Restaurant type"] || "",
+        orderOption: row["Order option"] || "",
+        address: row["Address"] || "",
+        phone: row["Phone"] || "",
+        userName: row["Name"] || "",
+        userEmail: row["Email"] || "",
+        items: (row["Item"] || "").split(",").map((item) => item.trim()),
+        subtotal: parseFloat(row["Subtotal"] || 0),
+        deliveryFee: parseFloat(row["Delivery fee"] || 0),
+        total: parseFloat(row["Total"] || 0),
+      }));
+
+      setOrders(mappedOrders);
+    } catch (error) {
+      console.error("❌ Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchOrders();
   }, []);
 
   // Pagination logic
@@ -135,6 +137,7 @@ function AdminPanel({ onSignOut }) {
                 <tr>
                   <th className="px-3 md:px-6 py-3">Order ID</th>
                   <th className="px-3 md:px-6 py-3">User Name</th>
+                  <th className="px-3 md:px-6 py-3">Email</th>
                   <th className="px-3 md:px-6 py-3">Order Time</th>
                   <th className="px-3 md:px-6 py-3">Restaurant Type</th>
                   <th className="px-3 md:px-6 py-3">Order Option</th>
@@ -144,57 +147,24 @@ function AdminPanel({ onSignOut }) {
                   <th className="px-3 md:px-6 py-3">Subtotal</th>
                   <th className="px-3 md:px-6 py-3">Delivery Fee</th>
                   <th className="px-3 md:px-6 py-3">Total</th>
-                  <th className="px-3 md:px-6 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {currentOrders.map((order) => (
-                  <React.Fragment key={order.id}>
-                    <tr className="bg-white border-b hover:bg-gray-50 transition">
-                      <td className="px-3 md:px-6 py-4">{order.id}</td>
-                      <td className="px-3 md:px-6 py-4">{order.userName}</td>
-                      <td className="px-3 md:px-6 py-4">
-                        {order.orderTime
-                          ? new Date(order.orderTime).toLocaleString()
-                          : "-"}
-                      </td>
-                      <td className="px-3 md:px-6 py-4">{order.restaurantType}</td>
-                      <td className="px-3 md:px-6 py-4">{order.orderOption || "-"}</td>
-                      <td className="px-3 md:px-6 py-4">{order.address || "-"}</td>
-                      <td className="px-3 md:px-6 py-4">{order.phone || "-"}</td>
-                      <td className="px-3 md:px-6 py-4">
-                        <button
-                          onClick={() => toggleExpand(order.id)}
-                          className="text-green-600 hover:text-orange-800 font-medium"
-                        >
-                          View Items ({order.items.length})
-                        </button>
-                      </td>
-                      <td className="px-3 md:px-6 py-4">£{order.subtotal.toFixed(2)}</td>
-                      <td className="px-3 md:px-6 py-4">£{order.deliveryFee.toFixed(2)}</td>
-                      <td className="px-3 md:px-6 py-4 font-bold">
-                        £{order.total.toFixed(2)}
-                      </td>
-                      <td className="px-3 md:px-6 py-4">
-                        <button className="text-green-600 hover:text-green-800">
-                          View Details
-                        </button>
-                      </td>
-                    </tr>
-                    {expandedRow === order.id && (
-                      <tr>
-                        <td colSpan="12" className="px-3 md:px-6 py-4 bg-gray-50">
-                          <ul className="list-disc pl-5 space-y-1">
-                            {order.items.map((item, index) => (
-                              <li key={index} className="text-gray-700">
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </td>
-                      </tr>
-                    )}
-                  </React.Fragment>
+                  <tr key={order.id} className="bg-white border-b hover:bg-gray-50 transition">
+                    <td className="px-3 md:px-6 py-4">{order.id}</td>
+                    <td className="px-3 md:px-6 py-4">{order.userName || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.userEmail || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.orderTime ? new Date(order.orderTime).toLocaleString() : '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.restaurantType || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.orderOption || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.address || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.phone || '-'}</td>
+                    <td className="px-3 md:px-6 py-4">{order.items && order.items.length ? order.items.join(", ") : '-'}</td>
+                    <td className="px-3 md:px-6 py-4">£{!isNaN(order.subtotal) ? order.subtotal.toFixed(2) : '-'}</td>
+                    <td className="px-3 md:px-6 py-4">£{!isNaN(order.deliveryFee) ? order.deliveryFee.toFixed(2) : '-'}</td>
+                    <td className="px-3 md:px-6 py-4 font-bold">£{!isNaN(order.total) ? order.total.toFixed(2) : '-'}</td>
+                  </tr>
                 ))}
               </tbody>
             </table>

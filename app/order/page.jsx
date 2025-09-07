@@ -5,6 +5,62 @@ import Navbar from "../components/Navbar";
 import Contact from "../components/Contact";
 import { StoreContext } from "../context/StoreContext";
 
+// ✅ CheckoutButton Component with Success Popup
+function CheckoutButton({ handleContinue, loadingSubmit, cartLines }) {
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  const handleOrder = async () => {
+    try {
+      await handleContinue(); // your existing order submission logic
+      setShowSuccess(true); // show success popup
+    } catch (error) {
+      console.error("❌ Order failed:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={handleOrder}
+        disabled={loadingSubmit || cartLines.length === 0}
+        className="mt-6 w-full bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition font-semibold disabled:opacity-50"
+      >
+        {loadingSubmit ? "Submitting..." : "Done"}
+      </button>
+
+      {/* ✅ Success Popup */}
+      {showSuccess && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full text-center animate-fadeIn">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
+                <svg
+                  className="w-10 h-10 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-800">Order Successful 🎉</h2>
+            <p className="text-gray-600 mt-2">Your order has been placed successfully!</p>
+            <button
+              onClick={() => setShowSuccess(false)}
+              className="mt-6 w-full bg-green-500 text-white py-2 rounded-xl hover:bg-green-600 transition font-semibold"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function OrderPage() {
   const [orderType, setOrderType] = useState(""); // "delivery" | "restaurant"
   const [restaurantOption, setRestaurantOption] = useState(""); // "eat-in" | "take-away"
@@ -105,10 +161,8 @@ export default function OrderPage() {
       address: orderType === "delivery" ? address : "",
       phone: orderType === "delivery" ? phone : "",
       timestamp: new Date().toISOString(),
-
       items: cartLines,
       itemsList: cartLines.map((l) => `${l.name} (x${l.qty})`).join(", "),
-
       subtotal,
       deliveryFee,
       total,
@@ -117,7 +171,7 @@ export default function OrderPage() {
     try {
       setLoadingSubmit(true);
 
-      await fetch(GOOGLE_SCRIPT_URL, {
+     await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
@@ -125,7 +179,7 @@ export default function OrderPage() {
       });
 
       console.log("✅ Order submitted:", orderData);
-      alert("Order submitted successfully! Check the console for details.");
+      // alert("Order submitted successfully! Check the console for details."); // Removed alert
     } catch (err) {
       console.error("❌ Submit error:", err);
       alert("Could not submit order. Try again.");
@@ -308,13 +362,11 @@ export default function OrderPage() {
               </div>
             </div>
 
-            <button
-              onClick={handleContinue}
-              disabled={loadingSubmit || cartLines.length === 0}
-              className="mt-6 w-full bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition font-semibold disabled:opacity-50"
-            >
-              {loadingSubmit ? "Submitting..." : "Done"}
-            </button>
+            <CheckoutButton
+              handleContinue={handleContinue}
+              loadingSubmit={loadingSubmit}
+              cartLines={cartLines}
+            />
 
             <p className="mt-3 text-xs text-gray-500">
               After you continue we'll save your order and log details in console.
