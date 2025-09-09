@@ -24,6 +24,13 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Retrieve latest order from localStorage on client side
+  const [latestOrder, setLatestOrder] = useState(null);
+  useEffect(() => {
+    const order = localStorage.getItem('latestOrder');
+    if (order) setLatestOrder(JSON.parse(order));
+  }, []);
+
   return (
     <>
       <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-200 text-green-700">
@@ -107,7 +114,15 @@ const Navbar = () => {
                   <p className="px-4 py-3 text-sm font-semibold text-gray-700 border-b">
                     Hi, {user.name?.split(" ")[0] || "User"}
                   </p>
-                 
+                  {latestOrder?.itemsList && (
+                    <Link
+                      href="/order-history"
+                      onClick={() => setDropdownOpen(false)} // Close dropdown on click
+                      className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 transition"
+                    >
+                      Order {latestOrder.itemsList && <span className="ml-1 text-xs bg-green-500 text-white rounded-full px-2 py-0.5">1</span>}
+                    </Link>
+                  )}
                   <button
                     onClick={() => signOut()}
                     className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition"

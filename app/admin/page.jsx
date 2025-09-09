@@ -15,8 +15,7 @@ function AdminPanel({ onSignOut }) {
 useEffect(() => {
   const fetchOrders = async () => {
     try {
-     const res = await fetch("/api/orders");
-
+      const res = await fetch("/api/orders");
       const data = await res.json();
 
       if (data.error) {
@@ -30,9 +29,9 @@ useEffect(() => {
         orderOption: row["Order option"] || "",
         address: row["Address"] || "",
         phone: row["Phone"] || "",
-        userName: row["Name"] || "",
-        userEmail: row["Email"] || "",
-        items: (row["Item"] || "").split(",").map((item) => item.trim()),
+        userName: row["User Name"] || "",  // Updated to match JSON key
+        userEmail: row["User Email"] || "",  // Updated to match JSON key
+        items: row["Items"] || "",  // Updated to match JSON key
         subtotal: parseFloat(row["Subtotal"] || 0),
         deliveryFee: parseFloat(row["Delivery fee"] || 0),
         total: parseFloat(row["Total"] || 0),
@@ -47,8 +46,7 @@ useEffect(() => {
   };
 
   fetchOrders();
-  }, []);
-
+}, []);
   // Pagination logic
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -136,7 +134,7 @@ useEffect(() => {
               <thead className="bg-gray-100 text-gray-800 uppercase text-xs">
                 <tr>
                   <th className="px-3 md:px-6 py-3">Order ID</th>
-                  <th className="px-3 md:px-6 py-3">User Name</th>
+                  <th className="px-3 md:px-6 py-3">Name</th>
                   <th className="px-3 md:px-6 py-3">Email</th>
                   <th className="px-3 md:px-6 py-3">Order Time</th>
                   <th className="px-3 md:px-6 py-3">Restaurant Type</th>
@@ -149,24 +147,24 @@ useEffect(() => {
                   <th className="px-3 md:px-6 py-3">Total</th>
                 </tr>
               </thead>
-              <tbody>
-                {currentOrders.map((order) => (
-                  <tr key={order.id} className="bg-white border-b hover:bg-gray-50 transition">
-                    <td className="px-3 md:px-6 py-4">{order.id}</td>
-                    <td className="px-3 md:px-6 py-4">{order.userName || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.userEmail || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.orderTime ? new Date(order.orderTime).toLocaleString() : '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.restaurantType || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.orderOption || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.address || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.phone || '-'}</td>
-                    <td className="px-3 md:px-6 py-4">{order.items && order.items.length ? order.items.join(", ") : '-'}</td>
-                    <td className="px-3 md:px-6 py-4">£{!isNaN(order.subtotal) ? order.subtotal.toFixed(2) : '-'}</td>
-                    <td className="px-3 md:px-6 py-4">£{!isNaN(order.deliveryFee) ? order.deliveryFee.toFixed(2) : '-'}</td>
-                    <td className="px-3 md:px-6 py-4 font-bold">£{!isNaN(order.total) ? order.total.toFixed(2) : '-'}</td>
-                  </tr>
-                ))}
-              </tbody>
+<tbody>
+  {currentOrders.map((order) => (
+    <tr key={order.id} className="bg-white border-b hover:bg-gray-50 transition">
+      <td className="px-3 md:px-6 py-4">{order.id}</td>
+      <td className="px-3 md:px-6 py-4">{order.userName || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.userEmail || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.orderTime ? new Date(order.orderTime).toLocaleString() : '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.restaurantType || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.orderOption || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.address || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.phone || '-'}</td>
+      <td className="px-3 md:px-6 py-4">{order.items || '-'}</td>
+      <td className="px-3 md:px-6 py-4">£{!isNaN(order.subtotal) ? order.subtotal.toFixed(2) : '-'}</td>
+      <td className="px-3 md:px-6 py-4">£{!isNaN(order.deliveryFee) ? order.deliveryFee.toFixed(2) : '-'}</td>
+      <td className="px-3 md:px-6 py-4 font-bold">£{!isNaN(order.total) ? order.total.toFixed(2) : '-'}</td>
+    </tr>
+  ))}
+</tbody>
             </table>
           </div>
 
