@@ -12,15 +12,16 @@ function AdminPanel({ onSignOut }) {
   const ordersPerPage = 5;
 
   // ✅ Fetch orders from Google Sheets (via Apps Script doGet)
+// ✅ Fetch orders from Google Sheets (via Apps Script doGet)
 useEffect(() => {
+  let isMounted = true;
+
   const fetchOrders = async () => {
     try {
       const res = await fetch("/api/orders");
       const data = await res.json();
 
-      if (data.error) {
-        throw new Error(data.error);
-      }
+      if (data.error) throw new Error(data.error);
 
       const mappedOrders = data.map((row, index) => ({
         id: index + 1,
@@ -29,24 +30,36 @@ useEffect(() => {
         orderOption: row["Order option"] || "",
         address: row["Address"] || "",
         phone: row["Phone"] || "",
-        userName: row["User Name"] || "",  // Updated to match JSON key
-        userEmail: row["User Email"] || "",  // Updated to match JSON key
-        items: row["Items"] || "",  // Updated to match JSON key
+        userName: row["User Name"] || "",
+        userEmail: row["User Email"] || "",
+        items: row["Items"] || "",
         subtotal: parseFloat(row["Subtotal"] || 0),
         deliveryFee: parseFloat(row["Delivery fee"] || 0),
         total: parseFloat(row["Total"] || 0),
       }));
 
-      setOrders(mappedOrders);
+      if (isMounted) {
+        setOrders(mappedOrders);
+        setLoading(false);
+      }
     } catch (error) {
       console.error("❌ Error fetching orders:", error);
-    } finally {
-      setLoading(false);
+      if (isMounted) setLoading(false);
     }
   };
 
+  // First fetch
   fetchOrders();
+
+  // 🔄 Poll every 10s
+  const interval = setInterval(fetchOrders, 10000);
+
+  return () => {
+    isMounted = false;
+    clearInterval(interval);
+  };
 }, []);
+
   // Pagination logic
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
