@@ -8,15 +8,20 @@ export default function OrderHistory() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const stored = localStorage.getItem("orders");
-    if (stored) {
-      setOrders(JSON.parse(stored));
-    } else {
-      const latestOrder = localStorage.getItem("latestOrder");
-      if (latestOrder) {
-        setOrders([JSON.parse(latestOrder)]);
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch("/api/orders");
+        const data = await res.json();
+        console.log("Orders from API:", data);
+
+        if (Array.isArray(data)) {
+          setOrders(data);
+        }
+      } catch (err) {
+        console.error("❌ Error fetching orders:", err);
       }
-    }
+    };
+    fetchOrders();
   }, []);
 
   if (!orders || orders.length === 0) {
@@ -44,23 +49,52 @@ export default function OrderHistory() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Order History</h1>
 
         <div className="space-y-4">
-          {orders.map((order, idx) => (
-            <details
-              key={idx}
-              className="border border-gray-200 rounded-2xl bg-white shadow-md"
-            >
-              <summary className="cursor-pointer p-4 flex justify-between items-center">
-                <span className="font-medium text-gray-800">
-                  Order #{idx + 1}
-                </span>
-              </summary>
+          {orders.map((order, idx) => {
+            const items = order.Items?.split(", ") || [];
+            const firstTwo = items.slice(0, 2);
 
-              <div className="p-6 border-t border-gray-100 space-y-4">
-                {/* Items with images */}
-                <div className="space-y-4">
-                  {order.itemsList
-                    ?.split(", ")
-                    .map((item, index) => (
+            return (
+              <details
+                key={idx}
+                className="border border-gray-200 rounded-2xl bg-white shadow-md overflow-hidden"
+              >
+                {/* Summary row styled as card header */}
+                <summary className="cursor-pointer flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 transition">
+                  {/* Left: Thumbnails */}
+                  <div className="flex items-center gap-3">
+                    {firstTwo.map((item, i) => (
+                      <img
+                        key={i}
+                        src={findDishImage(item)}
+                        alt={item}
+                        className="w-12 h-12 object-cover rounded-lg border"
+                      />
+                    ))}
+                    {items.length > 2 && (
+                      <span className="text-xs text-gray-500">
+                        +{items.length - 2} more
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Right: Date, Total, Status */}
+                  <div className="text-right space-y-1">
+                    <p className="text-sm text-gray-600">
+                      {order.Timestamp
+                        ? new Date(order.Timestamp).toLocaleDateString()
+                        : "Unknown Date"}
+                    </p>
+                    <p className="text-lg font-bold text-gray-800">
+                      £{order.Total?.toFixed(2) || "0.00"}
+                    </p>
+                  </div>
+                </summary>
+
+                {/* Expanded Details */}
+                <div className="p-6 border-t border-gray-100 space-y-4">
+                  {/* Items with images */}
+                  <div className="space-y-4">
+                    {items.map((item, index) => (
                       <div key={index} className="flex items-center gap-4">
                         <img
                           src={findDishImage(item)}
@@ -70,26 +104,27 @@ export default function OrderHistory() {
                         <p className="text-sm text-gray-600">{item}</p>
                       </div>
                     ))}
-                </div>
+                  </div>
 
-                {/* Totals */}
-                <div className="border-t border-gray-100 pt-4 space-y-2 text-sm">
-                  <div className="flex justify-between text-gray-600">
-                    <span>Subtotal</span>
-                    <span>£{order.subtotal?.toFixed(2) || "0.00"}</span>
-                  </div>
-                  <div className="flex justify-between text-gray-600">
-                    <span>Delivery Fee</span>
-                    <span>£{order.deliveryFee?.toFixed(2) || "0.00"}</span>
-                  </div>
-                  <div className="flex justify-between font-bold text-gray-800 text-lg">
-                    <span>Total</span>
-                    <span>£{order.total?.toFixed(2) || "0.00"}</span>
+                  {/* Totals */}
+                  <div className="border-t border-gray-100 pt-4 space-y-2 text-sm">
+                    <div className="flex justify-between text-gray-600">
+                      <span>Subtotal</span>
+                      <span>£{order.Subtotal?.toFixed(2) || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-600">
+                      <span>Delivery Fee</span>
+                      <span>£{order["Delivery fee"]?.toFixed(2) || "0.00"}</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-gray-800 text-lg">
+                      <span>Total</span>
+                      <span>£{order.Total?.toFixed(2) || "0.00"}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </details>
-          ))}
+              </details>
+            );
+          })}
         </div>
       </div>
       <Contact />

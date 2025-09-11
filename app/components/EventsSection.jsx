@@ -5,7 +5,7 @@ export default function EventsSection() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <section id="events" className="bg-gray-50 py-16 px-6 lg:px-20 text-center">
+    <section id="Events" className="bg-gray-50 py-16 px-6 lg:px-20 text-center">
       {/* 🎟 Ticket Button */}
       <div className="mb-12">
         <a

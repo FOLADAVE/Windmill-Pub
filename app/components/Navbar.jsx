@@ -48,7 +48,7 @@ const Navbar = () => {
 
         {/* Center Links */}
         <div className="hidden md:flex items-center gap-6 lg:gap-10 font-medium text-[16px]">
-          {["Home", "Menu", "About", "Contact"].map((link) => (
+          {["Home", "Menu", "Events", "About", "Contact"].map((link) => (
             <Link
               key={link}
               href={`/#${link}`}

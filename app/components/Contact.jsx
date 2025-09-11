@@ -33,6 +33,9 @@ const Contact = () => {
               <Link href="/#Menu" className="block w-full">Menu</Link>
             </li>
             <li>
+              <Link href="/#Events" className="block w-full">Events</Link>
+            </li>
+            <li>
               <Link href="/#About" className="block w-full">About</Link>
             </li>
             <li>
