@@ -36,9 +36,18 @@ export default function OrderHistory() {
     );
   }
 
-  // helper to find dish image by name
+  // 🔹 Format currency safely
+  const formatCurrency = (value) => {
+    const num = parseFloat(value);
+    if (isNaN(num)) return "0.00";
+    return num.toFixed(2);
+  };
+
+  // 🔹 Find dish image by name
   const findDishImage = (itemName) => {
-    const dish = dishes.find((d) => itemName.includes(d.name));
+    const dish = dishes.find((d) =>
+      itemName.toLowerCase().includes(d.name.toLowerCase())
+    );
     return dish ? dish.img : "/images/placeholder.jpg"; // fallback if no match
   };
 
@@ -77,7 +86,7 @@ export default function OrderHistory() {
                     )}
                   </div>
 
-                  {/* Right: Date, Total, Status */}
+                  {/* Right: Date, Total */}
                   <div className="text-right space-y-1">
                     <p className="text-sm text-gray-600">
                       {order.Timestamp
@@ -85,7 +94,7 @@ export default function OrderHistory() {
                         : "Unknown Date"}
                     </p>
                     <p className="text-lg font-bold text-gray-800">
-                      £{order.Total?.toFixed(2) || "0.00"}
+                      £{formatCurrency(order.Total)}
                     </p>
                   </div>
                 </summary>
@@ -110,15 +119,15 @@ export default function OrderHistory() {
                   <div className="border-t border-gray-100 pt-4 space-y-2 text-sm">
                     <div className="flex justify-between text-gray-600">
                       <span>Subtotal</span>
-                      <span>£{order.Subtotal?.toFixed(2) || "0.00"}</span>
+                      <span>£{formatCurrency(order.Subtotal)}</span>
                     </div>
                     <div className="flex justify-between text-gray-600">
                       <span>Delivery Fee</span>
-                      <span>£{order["Delivery fee"]?.toFixed(2) || "0.00"}</span>
+                      <span>£{formatCurrency(order["Delivery fee"])}</span>
                     </div>
                     <div className="flex justify-between font-bold text-gray-800 text-lg">
                       <span>Total</span>
-                      <span>£{order.Total?.toFixed(2) || "0.00"}</span>
+                      <span>£{formatCurrency(order.Total)}</span>
                     </div>
                   </div>
                 </div>
